@@ -3,19 +3,20 @@
 
 <div class="row">
 	<div class="col">
-		<form autocomplete="off">
-			<!-- Nombre -->
+		<form [formGroup]="myForm" (ngSubmit)="onSubmit()" autocomplete="off">
+			<!-- Name -->
 			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Nombre</label>
+				<label class="col-sm-3 col-form-label">Name</label>
 				<div class="col-sm-9">
 					<input
 						type="text"
 						class="form-control"
-						placeholder="Nombre del usuario"
+						placeholder="Name"
+						formControlName="name"
 					/>
 
-					<span class="form-text text-danger">
-						Debe de ser en formato de nombre y apellido
+					<span class="form-text text-danger" *ngIf="isValidField('name')">
+						{{ getFieldError("name") }}
 					</span>
 				</div>
 			</div>
@@ -27,10 +28,11 @@
 					<input
 						type="email"
 						class="form-control"
-						placeholder="Email del usuario"
+						placeholder="Email"
+						formControlName="email"
 					/>
-					<span class="form-text text-danger">
-						mensaje de error del email
+					<span class="form-text text-danger" *ngIf="isValidField('email')">
+						{{ getFieldError("email") }}
 					</span>
 				</div>
 			</div>
@@ -42,10 +44,11 @@
 					<input
 						type="text"
 						class="form-control"
-						placeholder="Nombre código del usuario"
+						placeholder="Username"
+						formControlName="username"
 					/>
-					<span class="form-text text-danger">
-						El username no puede ser Strider
+					<span class="form-text text-danger" *ngIf="isValidField('username')">
+						{{ getFieldError("username") }}
 					</span>
 				</div>
 			</div>
@@ -57,57 +60,67 @@
 					<input
 						type="password"
 						class="form-control"
-						placeholder="Password de su cuenta"
+						placeholder="Password"
+						formControlName="password"
 					/>
 
-					<span class="form-text text-danger">
-						La contraseña debe de ser mayor de 6 caracteres.
+					<span class="form-text text-danger" *ngIf="isValidField('password')">
+						{{ getFieldError("password", true) }}
 					</span>
 				</div>
 			</div>
 
 			<!-- Password2 -->
 			<div class="row mb-3">
-				<label class="col-sm-3 col-form-label">Confirmar</label>
+				<label class="col-sm-3 col-form-label">Confirm</label>
 				<div class="col-sm-9">
 					<input
 						type="password"
 						class="form-control"
-						placeholder="Confirmar la contraseña"
+						placeholder="Confirm password"
+						formControlName="password2"
 					/>
 
-					<span class="form-text text-danger">
-						Las contraseñas deben de ser iguales
+					<span class="form-text text-danger" *ngIf="isValidField('password2')">
+						{{ getFieldError("password2", true) }}
 					</span>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col">
-					<button class="btn btn-primary float-end" type="submit">Crear</button>
+					<button class="btn btn-primary float-end" type="submit">
+						Create
+					</button>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
 
-<h2>Form Valid:</h2>
-<h2>Form Status:</h2>
-<h2>Form Pending:</h2>
-<h2>Form errors</h2>
-<pre>{{ "formulario" | json }}</pre>
+<h5>Form Valid:</h5>
+<pre>{{ myForm.valid | json }}</pre>
+
+<h5>Form Status:</h5>
+<pre>{{ myForm.status | json }}</pre>
+
+<h5>Form Pending:</h5>
+<pre>{{ myForm.pending | json }}</pre>
+
+<h5>Form errors</h5>
+<pre>{{ myForm.errors | json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["name"].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["email"].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["username"].errors | json }}</pre>
 
 <h5>Password</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.value.password | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ "formulario" | json }}</pre>
+<pre>{{ myForm.controls["password2"].errors | json }}</pre>
